@@ -3,25 +3,23 @@
 
 #include <iostream>
 #include <string>
+#include<vector>
 #include "transporters.h"
 using namespace std;
 
 template <typename ItemType>
-class Bus : public Transporters{
+class Bus : public Transporters<ItemType>{
+    private:
+        static const int ITEM_SIZE = 20;
+        ItemType items[ITEM_SIZE];
+        int count;
     public:
         Bus();
-        virtual ~Bus();
-        vector<People> Getpeople();
-        void Setpeople(vector<People> val);
-        void loadPeople(People people);
-        void unloadPeople(People people);
-        void emptyAllPeople();
-        ItemType peopleCount();
-        void sortPeople();
-        ItemType isEmpty();
-
-    private:
-        vector<People> people;
+        void load(const ItemType&);
+        void unload(const ItemType&);
+        void emptyAllItems();
+        bool isEmpty();
+        int itemCount();
 };
 
 #include "bus.cpp"
