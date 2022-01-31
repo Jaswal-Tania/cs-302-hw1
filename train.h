@@ -5,22 +5,23 @@
 #include <string>
 #include <vector>
 #include "transporters.h"
-#include "cargo.h"
+
 using namespace std;
 
 template <typename ItemType>
-class Train : public Transporters{
+class Train : public Transporters<ItemType>{
     private:
-        vector<Cargo> cargo;
+        static const int ITEM_SIZE = 20;
+        ItemType items[ITEM_SIZE];
+        int count;
+
     public:
         Train();
-        virtual ~Train();
-        vector<Cargo> Getcargo();
-        ItemType ItemCount();
-        void load(Cargo cargo);
-        void unload(Cargo cargo);
-        ItemType isEmpty();
+        void load(const ItemType&);
+        void unload(const ItemType&);
         void emptyAllItems();
+        bool isEmpty() const;
+        int itemCount();
 };
 #include "train.cpp"
 #endif
