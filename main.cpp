@@ -1,5 +1,7 @@
+// Tania Jaswal
+
 #include <iostream>
-#include <string.h>
+#include <string>
 #include "people.h"
 #include "train.h"
 #include "bus.h"
@@ -7,12 +9,7 @@
 using namespace std;
 
 int main(){
-	Train<double> cargo(5.3);
-	//Cargo cargo("Heavy", 70.4);
-	//Cargo cargo2("light", 5.3);
-
-
-
-	cout << cargo.load()<< endl;
+    cout << "This program will tell you the status of bus and train." << endl;
+    
 	
 }
