@@ -1,8 +1,7 @@
-#ifndef TRAIN_H
-#define TRAIN_H
+#ifndef _TRAIN_H_
+#define _TRAIN_H_
+#pragma once
 
-#include <iostream>
-#include <string>
 #include <vector>
 #include "transporters.h"
 
@@ -14,14 +13,18 @@ class Train : public Transporters<ItemType>{
         static const int ITEM_SIZE = 20;
         ItemType items[ITEM_SIZE];
         int count;
+        int maxItems;
 
     public:
         Train();
-        void load(const ItemType&);
-        void unload(const ItemType&);
+        bool load(const ItemType&);
+        bool unload(const ItemType&);
         void emptyAllItems();
         bool isEmpty() const;
         int itemCount();
+        void move();
+        vector<ItemType> toVector() const;
+        ~Train(){}
 };
 #include "train.cpp"
 #endif

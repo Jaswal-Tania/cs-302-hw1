@@ -2,17 +2,43 @@
 
 
 template<typename ItemType>
-Bus<ItemType>::Bus() : Count(0){
+Bus<ItemType>::Bus(){
+    count = 0;
+	maxItems = ITEM_SIZE;
 }
 
 template<typename ItemType>
-void Bus<ItemType>::load(const ItemType&){
+bool Bus<ItemType>::load(const ItemType& newItem){
+    bool space = count < maxItems;
 
+    if(space){
+        items[count] = newItem;
+        count++;
+    }
+    
+    return space;
 }
 
 template<typename ItemType>
-void Bus<ItemType>::unload(const ItemType&){
+bool Bus<ItemType>::unload(const ItemType& remItem){
+    bool found = false;
+    int index = 0;
 
+    while(!found && (index < count)){
+        if(items[index] == remItem){
+            found = true;
+        }
+        else{
+            index++;
+        } 
+    }
+
+    if (found){ //swap with last item
+        items[index] = items[count-1];
+        count--;
+    }
+
+    return found;
 }
 
 template<typename ItemType>
@@ -22,84 +48,27 @@ void Bus<ItemType>::emptyAllItems(){
 
 template<typename ItemType>
 bool Bus<ItemType>::isEmpty(){
-    return count == 0;
+    return count == 0; 
 }
 
 
 template<typename ItemType>
 int Bus<ItemType>::itemCount(){
-    return Count;
+    return count;
 }
 
-// template<typename ItemType>
-// Bus<ItemType>::~Bus() {}
+template<typename ItemType>
+void Bus<ItemType>::move(){
+	std::cout << "The Bus is moving!!" <<std::endl;
+}
 
-// template<typename ItemType>
-// vector<People> GetPeople() { 
-//     return People;
-// }
+template<typename ItemType>
+vector<ItemType> Bus<ItemType>::toVector() const{
+	vector<ItemType> bItems;
 
-// template<typename ItemType>
-// void Bus<ItemType>::Setpeople(vector<People> val) { people = val; }
+	for( int index = 0; index < count; index++){
+		bItems.push_back(items[ITEM_SIZE]);
+	}
 
-// template<typename ItemType>
-// void Bus<ItemType>::loadPeople(People people){
-//     this->people.push_back(people);
-//     this->sortPeople();
-// }
-
-// template<typename ItemType>
-// void Bus<ItemType>::unloadPeople(People people){
-//     bool found = false;
-
-//     for (int i = 0; i < this->people.size(); i++){
-//         if (this->people.at(i).getName() == people.getName()){
-//         this->people.erase(this->people.begin() + i);
-//         }
-//     }
-
-//     if (found == true){
-//         cout << "Person has got off the bus!" << endl;
-//         this->sortPeople();
-//     }
-
-//     else{
-//         cout << "Person is not on the bus!" << endl;
-//     }
-// }
-
-// template<typename ItemType>
-// void Bus<ItemType>::emptyAllPeople(){
-//     this->people.clear();
-// }
-
-// template<typename ItemType>
-// ItemType Bus<ItemType>::peopleCount(){
-//     return this->people.size();
-// }
-
-// template<typename ItemType>
-// void Bus<ItemType>::sortPeople(){
-//     People temp;
-
-//     for (int i = 0; i < this->people.size(); i++){
-//         for (int j = 0; j < this->people.size() - i - 1; j++){
-//             if (this->people.at(j).getHeight() < this->people.at(j + 1).getHeight()){
-//                 temp = this->people.at(j);
-//                 this->people.at(j) = this->people.at(j + 1);
-//                 this->people.at(j + 1) = temp;
-//             }
-//         }
-//     }
-// }
-
-// template<typename ItemType>
-// ItemType Bus<ItemType>::isEmpty(){
-//     if (this->people.size() == 0){
-//         return true;
-//     }
-
-//     else{
-//         return false;
-//     }
-// }
+	return bItems;
+}

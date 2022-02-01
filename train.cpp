@@ -1,91 +1,79 @@
 #include "train.h"
 
 template<typename ItemType>
-Train<ItemType>::Train() : Count(0){
+Train<ItemType>::Train(){
+	count = 0;
+	maxItems = ITEM_SIZE;
 }
 
 template<typename ItemType>
-void Train<ItemType>::load(const ItemType& newItem){
-	items[Count] = newItem;
-	return newItem++;
+bool Train<ItemType>::load(const ItemType& newItem){
+	bool space = count < maxItems;
+	
+    if(space){
+        items[count] = newItem;
+        count++;
+    }
+
+	// int i = newItem;
+
+	// while(i < items[count]){
+
+	// }
+
+    return space;
 }
 
 template<typename ItemType>
-void Train<ItemType>::unload(const ItemType& remItem){
-	items[Count] = remItem;
-	return remItem--;
+bool Train<ItemType>::unload(const ItemType& remItem){
+	bool found = false;
+    int index = 0;
+
+    while(!found && (index < count)){
+        if(items[index] == remItem){
+            found = true;
+        }
+        else{
+            index++;
+        } 
+    }
+
+    if (found){ //swap with last item
+        items[index] = items[count-1];
+        count--;
+    }
+
+    return found;
 }
 
 template<typename ItemType>
 void Train<ItemType>::emptyAllItems(){
-	return count = 0;
+	count = 0;
 }
 
 template<typename ItemType>
 bool Train<ItemType>::isEmpty() const{
-	return Count == 0;
+	return count == 0;
 }
 
 
 template<typename ItemType>
 int Train<ItemType>::itemCount(){
-	return Count;
+	return count;
 }
 
+template<typename ItemType>
+void Train<ItemType>::move(){
+	std::cout << "The Train is moving!!" <<std::endl;
+}
 
+template<typename ItemType>
+vector<ItemType> Train<ItemType>::toVector() const{
+	vector<ItemType> tItems;
 
+	for( int index = 0; index < count; index++){
+		tItems.push_back(items[ITEM_SIZE]);
+	}
 
-
-// template<typename ItemType>
-// Train<ItemType>::~Train(){}
-
-// template<typename ItemType>
-// vector<Cargo> getCargo(){
-// 	return Cargo;
-// }
-
-// template<typename ItemType>
-// ItemType Train<ItemType>::ItemCount(){
-//     return this->cargo.size();
-//  }
-
-// template<typename ItemType>
-//  void Train<ItemType>::load(Cargo cargo){
-//     this->cargo.push_back(cargo);
-//  }
-
-// template<typename ItemType>
-// void Train<ItemType>::unload(Cargo cargo){
-//     bool found = false;
-
-//     for (int i = 0; i < this->cargo.size(); i++){
-//         if (this->cargo.at(i).getType() == cargo.getType()){
-//              this->cargo.erase(this->cargo.begin() + i);
-//              found = true;
-//          }
-//     }   
-
-//         if (found == true){
-//             cout << "Cargo unloaded!" << endl;
-//         }
-
-//         else{
-//              cout << "Cargo not found!" << endl;
-//         }
-//     }
-
-// template<typename ItemType>
-// bool Train<ItemType>::isEmpty(){
-//     if (this->cargo.size() == 0){
-//         return true;
-//     }
-
-//     else{
-//         return false;
-//     }
-// }
-
-// template<typename ItemType>
-// void Train<ItemType>::emptyAllItems(){
-//     this->cargo.clear();
-// }
+	return tItems;
+}
